@@ -232,7 +232,7 @@ class DelayableGraph(Graph):
         elif jobs_count == 1:
             if jobs[0].graph_uuid:
                 raise ValueError(
-                    f"Job {jobs[0]} is a single job, it should not" " have a graph uuid"
+                    f"Job {jobs[0]} is a single job, it should not have a graph uuid"
                 )
         else:
             graph_uuids = {job.graph_uuid for job in jobs if job.graph_uuid}
@@ -483,11 +483,10 @@ class Delayable:
         return [self]
 
     def __repr__(self):
-        return "Delayable({}.{}({}, {}))".format(
-            self.recordset,
-            self._job_method.__name__ if self._job_method else "",
-            self._job_args,
-            self._job_kwargs,
+        return (
+            f"Delayable({self.recordset}."
+            f"{self._job_method.__name__ if self._job_method else ''}"
+            f"({self._job_args}, {self._job_kwargs}))"
         )
 
     def __del__(self):
@@ -656,9 +655,9 @@ class DelayableRecordset:
         return _delay_delayable
 
     def __str__(self):
-        return "DelayableRecordset({}{})".format(
-            self.delayable.recordset._name,
-            getattr(self.delayable.recordset, "_ids", ""),
+        return (
+            f"DelayableRecordset({self.delayable.recordset._name}"
+            f"{getattr(self.delayable.recordset, '_ids', '')})"
         )
 
     __repr__ = __str__
